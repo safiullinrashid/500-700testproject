@@ -3,7 +3,7 @@ import type { NewsItem } from './types';
 export const fetchNews = (): Promise<NewsItem[]> => {
   return new Promise(resolve => {
     setTimeout(() => {
-      fetch('/news.json')
+      fetch(`${import.meta.env.BASE_URL}news.json`)
         .then(res => res.json())
         .then((data: NewsItem[]) => resolve(data));
     }, 800);

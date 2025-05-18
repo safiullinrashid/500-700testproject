@@ -11,7 +11,8 @@ const NewsCard: FC<Props> = ({ news }) => {
   return (
     <Link to={`/news/${news.id}`} className={styles.card}>
       <div className={styles.imageWrapper}>
-        <img src={news.image} alt={news.title} />
+        {/* путь к картинке через BASE_URL */}
+        <img src={`${import.meta.env.BASE_URL}${news.image}`} alt={news.title} />
       </div>
       <div className={styles.textContent}>
         <h2 className={styles.title}>{news.title}</h2>

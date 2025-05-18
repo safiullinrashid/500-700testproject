@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "homepage": "https://safiullinrashid.github.io/500-700testproject",
+  
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

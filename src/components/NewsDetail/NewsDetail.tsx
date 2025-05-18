@@ -16,7 +16,7 @@ const NewsDetail = () => {
   const [news, setNews] = useState<NewsItem | null>(null);
 
   useEffect(() => {
-    fetch("/news.json")
+    fetch(`${import.meta.env.BASE_URL}news.json`)
       .then((res) => res.json())
       .then((data: NewsItem[]) => {
         const found = data.find((item) => item.id === id);
@@ -29,7 +29,8 @@ const NewsDetail = () => {
   return (
     <section className={styles.detail}>
       <div className={styles.imageWrapper}>
-        <img src={news.image} alt={news.title} />
+        {/* путь к картинке через BASE_URL */}
+        <img src={`${import.meta.env.BASE_URL}${news.image}`} alt={news.title} />
       </div>
       <div className={styles.content}>
         <h1 className={styles.title}>{news.title}</h1>
