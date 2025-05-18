@@ -1,0 +1,174 @@
+@use "@/styles/variables" as *;
+
+// Основной контейнер
+.container {
+  padding: 0 $container-padding;
+  background-color: $color-black;
+  margin-top: var(--header-height, 119px);
+  padding-top: 2rem;
+   @media (max-width: 540px) {
+    padding: 0 ;
+  }
+}
+
+// Заголовок секции
+.heading {
+  color: $color-white;
+  font-size: font-size(h1);
+  font-weight: $font-weight-semibold;
+  margin-bottom: 2rem;
+  font-family: $font-family-inter;
+}
+
+// Сетка новостей
+.grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+
+// Карточка новости
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+   width: 100%;
+
+  background: $color-black;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+  padding-bottom: 1rem;
+
+  &:hover .title {
+    background: $gradient-primary;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+}
+
+
+// Обёртка картинки
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 440 / 300; // ✅ сохраняет соотношение
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: border-radius 0.3s ease;
+  }
+
+  .card:hover & img {
+    border-radius: 20px;
+  }
+}
+
+
+// Контейнер текста внутри карточки
+.textContent {
+  padding: 1rem;
+  font-family: $font-family-inter;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+
+// Заголовок карточки
+.title {
+  font-size: font-size(h2);
+  font-weight: $font-weight-medium;
+  margin-bottom: 0.5rem;
+  color: $color-white;
+  transition: all 0.3s ease;
+  font-family: $font-family-inter;
+}
+
+// Описание карточки
+.description {
+  font-size: font-size(text);
+  color: $color-text-primary;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+  display: -webkit-box;
+  max-lines: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  opacity: 50%;
+  font-weight: $font-weight-regular;
+
+}
+
+
+// Дата
+.date {
+  font-size: font-size(text);
+  color: $color-text-primary;
+  margin-top: auto;
+  padding-top: 0.5rem;
+  font-weight: $font-weight-regular;
+  opacity: 83%;
+}
+
+.slider {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  gap: 0;
+  padding: 0;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.cardWrapper {
+  scroll-snap-align: center;
+  flex: 0 0 100vw;
+  box-sizing: border-box;
+  padding: 0;
+
+  @media (min-width: 540px) {
+    padding: 0; // начиная с планшета
+  }
+}
+
+.controls {
+  display: flex;
+  gap: 10vw; // расстояние между стрелками
+  padding-left: 1rem; // отступ от левого края
+  padding-bottom: 1rem;
+  @media (min-width: 540px) {
+    padding: 0 ;
+    padding-left: 1rem;
+    padding-bottom: 1rem; // начиная с планшета
+  }
+  button {
+    background: none;
+    border: none;
+    padding: 0;
+  }
+
+  img {
+    width: 24px; // или нужный размер
+    height: 24px;
+  }
+}
+

@@ -1,0 +1,46 @@
+@use "./variables" as *;
+@use "./mixins" as *;
+
+// RESET
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: $font-family-inter;
+  font-weight: $font-weight-regular;
+  font-size: font-size(text);
+  color: $color-black;
+  background-color: #f5f5f5;
+  line-height: 1.5;
+}
+
+a {
+  color: $color-gradient-from;
+  text-decoration: none;
+  font-size: font-size(link);
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// Заголовки
+h1 { @include heading(1); }
+h2 { @include heading(2); }
+h3 { @include heading(3); }
+h4 { @include heading(4); }
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}

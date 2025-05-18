@@ -1,0 +1,9 @@
+@use "./variables" as v;
+@use "sass:map";
+
+@mixin heading($level) {
+  $size: map.get(v.$font-size-map, h#{$level});
+  font-size: $size;
+  font-weight: v.$font-weight-semibold;
+  font-family: v.$font-family-inter;
+}

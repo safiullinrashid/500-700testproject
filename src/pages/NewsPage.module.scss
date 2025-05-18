@@ -1,0 +1,50 @@
+@use "@/styles/variables" as *;
+.wrapper {
+  background-color: $color-black;
+  color: $color-white;
+  padding: 2rem;
+  font-family: $font-family-inter;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.image {
+  width: 30.5vw; // 440px при 1440px (1440 * 0.305 ≈ 440)
+  aspect-ratio: 440 / 300;
+  object-fit: cover;
+  border-radius: 12px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+}
+
+.content {
+  flex: 1;
+}
+
+.title {
+  font-size: font-size(h2);
+  font-weight: $font-weight-semibold;
+  margin: 0 0 0.5rem 0;
+}
+
+.date {
+  font-size: font-size(caption);
+  color: $color-text-primary;
+  margin-bottom: 1.5rem;
+}
+
+.text {
+  font-size: font-size(text);
+  line-height: 1.6;
+  color: $color-text-primary;
+  max-width: 65ch;
+}

@@ -1,0 +1,112 @@
+@use '@/styles/variables' as *;
+
+.mobileMenu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: $color-black;
+  z-index: 1101;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 1.5rem 1.5rem 2.5rem 1.5rem;
+
+  // Переключаем меню только на sm и меньше
+  @media (min-width: $breakpoint-sm) {
+    display: none;
+  }
+
+  .mobileMenuHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+
+    .logo {
+      height: 48px;
+    }
+    .closeBtn {
+      background: none;
+      border: none;
+      img {
+        width: 36px;
+        height: 36px;
+      }
+    }
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex: 1 0 auto;
+  }
+
+  li + li {
+    margin-top: 1.2rem;
+  }
+
+  a,
+  button,
+  .mobileToggle {
+    color: $color-white !important;
+    background: none;
+    border: none;
+    font-size: font-size(text);
+    font-family: $font-family-inter;
+    text-align: left;
+    width: 100%;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    font-weight: $font-weight-regular;
+    letter-spacing: 0.01em;
+    transition: color 0.2s;
+  }
+  .arrow {
+    margin-left: 8px;
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s;
+    filter: brightness(200%); // если svg слишком тёмный
+  }
+  .rotated {
+    transform: rotate(90deg);
+  }
+
+  .submenu {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.25s;
+    padding-left: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+
+    a {
+      font-size: font-size(link);
+      color: $color-white !important;
+      opacity: 0.95;
+      font-weight: $font-weight-regular;
+    }
+  }
+  .submenuOpen {
+    max-height: 350px;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobileCta {
+    margin-top: auto;
+    padding-top: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

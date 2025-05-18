@@ -1,0 +1,40 @@
+@use "sass:map";
+
+// Цвета
+$color-white: #FFFFFF;
+$color-black: #0F0F17;
+$color-gradient-from: #FB8627;
+$color-gradient-to: #F5BEF6;
+$color-text-primary: #fff;
+
+// Типографика
+$font-family-inter: 'Inter', sans-serif;
+
+$font-size-map: (
+  h1: clamp(28px, 2.8vw, 40px),
+  h2: clamp(20px, 2vw, 24px),
+  h3: clamp(18px, 1.8vw, 20px),
+  text: clamp(16px, 1.6vw, 16px),
+  caption: clamp(10px, 1vw, 12px),
+  link: clamp(14px, 1.4vw, 16px)
+);
+
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+
+// Layout
+$container-padding: 2rem;
+$breakpoint-sm: 640px;
+$breakpoint-lg: 1024px;
+$header-height: 119px !default;
+$header-expanded-height: 270px !default;
+
+// Градиенты
+$gradient-primary: linear-gradient(90deg, $color-gradient-from 0%, $color-gradient-to 100%);
+$gradient-vertical: linear-gradient(180deg, #FB8627 0%, #F5BEC6 100%);
+
+// Функции
+@function font-size($key) {
+  @return map.get($font-size-map, $key);
+}
