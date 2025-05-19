@@ -1,11 +1,12 @@
 @use "@/styles/variables" as *;
 
-/* Анимация появления пунктов */
+/* --- Анимация --- */
 @keyframes fadeSlideIn {
   0%   { opacity: 0; transform: translateY(10px); }
   100% { opacity: 1; transform: translateY(0); }
 }
 
+/* --- Хедер --- */
 .header {
   position: fixed;
   top: 0; left: 0;
@@ -22,7 +23,7 @@
   }
 }
 
-/* Фон шапки */
+/* Фон */
 .bg {
   position: absolute;
   top: 0; left: 0;
@@ -34,7 +35,7 @@
   z-index: 0;
 }
 
-/* Контент (logo, nav, cta, burger) */
+/* Контент */
 .content {
   position: relative;
   height: $header-height;
@@ -120,19 +121,19 @@
 /* Dropdown (десктоп) */
 .dropdown {
   position: absolute;
-  top: 100%;
+  top: calc(100% + 1rem); // <--- ОТСТУП сверху 1rem при раскрытии
   left: 0;
   display: flex;
   gap: 4rem;
   background: $color-black;
-  padding: 0 !important;
-  margin: 0 !important;
+  padding: 2rem 0 0 0;
   white-space: nowrap;
   z-index: 1;
   transform-origin: top;
   transform: scaleY(0);
   transition: transform 0.3s ease;
   pointer-events: none;
+  margin: 0 !important;
   .column {
     display: flex;
     flex-direction: column;
@@ -152,6 +153,8 @@
   opacity: 0;
   animation: fadeSlideIn 0.4s forwards;
   animation-delay: var(--delay);
+  margin: 0;
+  padding: 0;
 }
 
 /* Кнопка CTA (десктоп) */
@@ -202,7 +205,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 0; // Убираем паддинги по умолчанию
+  padding: 0; // убираем паддинги
   @media (min-width: 1025px) {
     display: none !important;
   }
@@ -232,12 +235,12 @@
     cursor: pointer;
     font-weight: $font-weight-regular;
     letter-spacing: 0.01em;
+    margin: 0 !important;
+    padding: 0 !important;
     &:hover {
       color: $color-gradient-from;
       text-decoration: none !important;
     }
-    margin: 0 !important;
-    padding: 0 !important;
   }
   .arrow {
     width: 12px;
@@ -272,11 +275,11 @@
   opacity: 0;
   pointer-events: none;
   transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.25s;
-  padding-left: 1.2rem;
+  padding-left: 1rem !important; // <--- ОТСТУП слева у всего раскрывающегося меню!
+  margin-top: 1rem !important;   // <--- ОТСТУП сверху подменю (ниже кнопки)
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-  margin: 0 !important;
   a {
     font-size: font-size(link);
     color: $color-white !important;
@@ -292,7 +295,7 @@
   pointer-events: auto;
 }
 
-/* Кнопка в мобильном меню — внизу и ПРИЖАТА К ЛЕВОМУ краю */
+/* Кнопка в мобильном меню — внизу и прижата к левому краю */
 .mobileCta {
   margin-top: auto;
   padding: 0 2rem 0 2rem;
@@ -380,7 +383,7 @@ input[type="email"] {
   }
 }
 
-/* Кнопка "Отправить" — стиль как у "Связаться с нами", но ЧЕРНЫЙ текст и прижата к левому краю */
+/* Кнопка "Отправить" — стиль как у "Связаться с нами", но ЧЁРНЫЙ текст */
 .submit {
   padding: 0.75rem 1.5rem;
   background: white;
