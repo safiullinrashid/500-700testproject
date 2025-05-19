@@ -26,17 +26,17 @@ const Accordion = () => {
             <button
               onClick={() => toggle(index)}
               className={styles.trigger}
+              aria-expanded={openIndex === index}
             >
               <span className={styles.question}>{question}</span>
               <img
                 src={arrowIcon}
                 alt="arrow"
-                className={`${styles.arrow} ${openIndex === index ? styles.open : ""}`}
+                className={`${styles.arrow} ${openIndex === index ? styles.rotated : ""}`}
               />
             </button>
             <div
               className={`${styles.answerWrapper} ${openIndex === index ? styles.expanded : ""}`}
-              onClick={() => toggle(index)}
             >
               <p className={styles.answer}>{answer}</p>
             </div>
