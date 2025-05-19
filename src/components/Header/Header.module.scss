@@ -44,11 +44,10 @@
   z-index: 1;
   padding: 0 2rem;
   @media (max-width: 1024px) {
-    justify-content: space-between; // СТАВЬ ЭТО!!!
-    padding: 0 1.2rem; // Сделай паддинг, чтобы элементы не прижимались к краю
+    justify-content: space-between;
+    padding: 0 1.2rem;
   }
 }
-
 
 /* Логотип */
 .logoLink {
@@ -60,10 +59,10 @@
   align-items: center;
   z-index: 2;
   @media (max-width: 1024px) {
-    position: static; 
+    position: static;
     transform: none;
     left: unset;
-    margin-left: 0; 
+    margin-left: 0;
   }
 }
 .logo {
@@ -83,7 +82,7 @@
 }
 .navList {
   display: flex;
-  gap: 2rem; /* равные отступы между всеми пунктами */
+  gap: 2rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -126,21 +125,24 @@
   display: flex;
   gap: 4rem;
   background: $color-black;
-  padding: 2rem 0 0 0;
+  padding: 0 !important;
+  margin: 0 !important;
   white-space: nowrap;
   z-index: 1;
   transform-origin: top;
   transform: scaleY(0);
   transition: transform 0.3s ease;
   pointer-events: none;
+  .column {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
 }
 .header.opened .dropdown {
   pointer-events: auto;
-}
-.column {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
 }
 .dropLink {
   color: $color-white;
@@ -180,36 +182,40 @@
   z-index: 3;
   @media (max-width: 1024px) {
     display: block;
-    position: static; // ВАЖНО! чтобы бургер не исчезал на мобилке
+    position: static;
     transform: none;
     right: unset;
     top: unset;
-    margin-left: auto; // чтобы прижался вправо
+    margin-left: auto;
   }
 }
 
 /* ---- Мобильное меню ---- */
 .mobileMenu {
   position: fixed;
-  top: $header-height; // а не top: 0!
+  top: $header-height;
   left: 0;
   width: 100vw;
-  height: calc(100vh - #{$header-height}); // чтобы шапка не перекрывалась
+  height: calc(100vh - #{$header-height});
   background: $color-black;
   z-index: 1101;
-  padding: $header-height 0 2rem 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  padding: 0; // Убираем паддинги по умолчанию
   @media (min-width: 1025px) {
     display: none !important;
   }
   ul {
     display: flex;
     flex-direction: column;
-    gap: 1rem; /* равные отступы между всеми пунктами */
-    padding: 1rem 1rem;
-    margin: 0;
+    gap: 1rem;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  li {
+    margin: 0 !important;
+    padding: 0 !important;
   }
   a, button {
     color: $color-white;
@@ -224,10 +230,14 @@
     transition: color 0.2s;
     text-decoration: none !important;
     cursor: pointer;
+    font-weight: $font-weight-regular;
+    letter-spacing: 0.01em;
     &:hover {
       color: $color-gradient-from;
       text-decoration: none !important;
     }
+    margin: 0 !important;
+    padding: 0 !important;
   }
   .arrow {
     width: 12px;
@@ -240,7 +250,6 @@
   }
 }
 
-/* Кнопка раскрытия в мобильном меню */
 .mobileToggle {
   width: 100%;
   display: flex;
@@ -252,7 +261,8 @@
   font-size: font-size(text);
   color: $color-white;
   cursor: pointer;
-  
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 /* Подменю (анимированное раскрытие) */
@@ -266,11 +276,14 @@
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
+  margin: 0 !important;
   a {
     font-size: font-size(link);
     color: $color-white !important;
     opacity: 0.95;
     font-weight: $font-weight-regular;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 }
 .submenuOpen {
@@ -315,8 +328,6 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  
-
   @media (max-width: 640px) {
     border-radius: 0;
     width: 100vw;
@@ -337,7 +348,7 @@
   img {
     width: 24px;
     height: 24px;
-    filter: brightness(0); /* делает крестик черным! */
+    filter: brightness(0);
   }
 }
 .modalTitle {
@@ -377,7 +388,7 @@ input[type="email"] {
   border-radius: 2rem;
   font-weight: 500;
   font-size: font-size(text);
-  color: #191919; // ЧЁРНЫЙ текст!
+  color: #191919;
   margin-left: 0;
   margin-top: 0.5rem;
   width: max-content;

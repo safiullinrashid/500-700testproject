@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../Button/Button';
 import styles from './Header.module.scss';
 
@@ -17,40 +17,131 @@ export const Header: React.FC = () => {
   const [contactOpen, setContactOpen] = useState(false);
 
   const aboutItems = [
-    { to: '/about/500',    label: 'О 500на700',    delay: '1s'   },
-    { to: '/about/docs',   label: 'Документы',     delay: '1.2s' },
-    { to: '/about/sustain',label: 'Устойчивое развитие', delay: '1.4s' },
+    { to: '/about/500', label: 'О 500на700', delay: '1s' },
+    { to: '/about/docs', label: 'Документы', delay: '1.2s' },
+    { to: '/about/sustain', label: 'Устойчивое развитие', delay: '1.4s' },
   ];
   const projectItems = [
-    { to: '/about/team',    label: 'Команда',    delay: '1.6s' },
-    { to: '/about/strategy',label: 'Стратегия',  delay: '1.8s' },
+    { to: '/about/team', label: 'Команда', delay: '1.6s' },
+    { to: '/about/strategy', label: 'Стратегия', delay: '1.8s' },
   ];
 
-  // Модалка "Связаться с нами"
-  const ContactModal = () => (
-    <div className={styles.contactModalOverlay}>
-      <div className={styles.contactModal}>
-        <button className={styles.closeContactModal} onClick={() => setContactOpen(false)}>
-          <img src={closeIcon} alt="Закрыть" />
-        </button>
-        <h2 className={styles.modalTitle}>СВЯЗАТЬСЯ С НАМИ</h2>
-        <form className={styles.form} onSubmit={e => { e.preventDefault(); }}>
-          <input type="text" placeholder="Имя" />
-          <input type="tel" placeholder="Телефон" />
-          <input type="email" placeholder="E-mail" />
-          <label className={styles.checkbox}>
-            <input type="checkbox" />
-            <span>Я СОГЛАСЕН (-А) НА ОБРАБОТКУ ПЕРСОНАЛЬНЫХ ДАННЫХ</span>
-          </label>
-          {/* Кнопка как в макете, черный текст, прижата влево */}
-          <button type="submit" className={styles.submit}>Отправить</button>
-        </form>
-      </div>
-    </div>
-  );
+  // v6/v7 совместимость: если useNavigate нет, замени на window.location.href = '/'
+  const navigate = useNavigate ? useNavigate() : null;
 
-  // Логика для сброса всех подменю при закрытии моб. меню
-  React.useEffect(() => {
+  // ----- Модалка "Связаться с нами" -----
+  const ContactModal = () => {
+    const [values, setValues] = useState({
+      name: '',
+      phone: '',
+      email: '',
+      agree: false,
+    });
+    const [errors, setErrors] = useState({
+      name: '',
+      phone: '',
+      email: '',
+      agree: '',
+    });
+
+    function validate() {
+      let valid = true;
+      const errs = { name: '', phone: '', email: '', agree: '' };
+      if (!values.name.trim()) {
+        errs.name = 'Введите имя';
+        valid = false;
+      }
+      if (!/^\+?\d{7,}$/.test(values.phone)) {
+        errs.phone = 'Введите корректный телефон';
+        valid = false;
+      }
+      if (!values.email.trim() || !values.email.includes('@')) {
+        errs.email = 'Введите корректный email';
+        valid = false;
+      }
+      if (!values.agree) {
+        errs.agree = 'Обязательное поле';
+        valid = false;
+      }
+      setErrors(errs);
+      return valid;
+    }
+
+    function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+      const { name, value, type, checked } = e.target;
+      setValues((prev) => ({
+        ...prev,
+        [name]: type === 'checkbox' ? checked : value,
+      }));
+      setErrors((prev) => ({ ...prev, [name]: '' }));
+    }
+
+    function handleSubmit(e: React.FormEvent) {
+      e.preventDefault();
+      if (validate()) {
+        setContactOpen(false);
+        if (navigate) {
+          navigate('/');
+        } else {
+          window.location.href = '/';
+        }
+      }
+    }
+
+    return (
+      <div className={styles.contactModalOverlay}>
+        <div className={styles.contactModal}>
+          <button className={styles.closeContactModal} onClick={() => setContactOpen(false)}>
+            <img src={closeIcon} alt="Закрыть" />
+          </button>
+          <h2 className={styles.modalTitle}>СВЯЗАТЬСЯ С НАМИ</h2>
+          <form className={styles.form} onSubmit={handleSubmit}>
+            <input
+              type="text"
+              name="name"
+              placeholder="Имя"
+              value={values.name}
+              onChange={handleChange}
+              required
+            />
+            {errors.name && <div style={{ color: 'red', fontSize: 12 }}>{errors.name}</div>}
+            <input
+              type="tel"
+              name="phone"
+              placeholder="Телефон"
+              value={values.phone}
+              onChange={handleChange}
+              required
+            />
+            {errors.phone && <div style={{ color: 'red', fontSize: 12 }}>{errors.phone}</div>}
+            <input
+              type="email"
+              name="email"
+              placeholder="E-mail"
+              value={values.email}
+              onChange={handleChange}
+              required
+            />
+            {errors.email && <div style={{ color: 'red', fontSize: 12 }}>{errors.email}</div>}
+            <label className={styles.checkbox}>
+              <input
+                type="checkbox"
+                name="agree"
+                checked={values.agree}
+                onChange={handleChange}
+              />
+              <span>Я СОГЛАСЕН (-А) НА ОБРАБОТКУ ПЕРСОНАЛЬНЫХ ДАННЫХ</span>
+            </label>
+            {errors.agree && <div style={{ color: 'red', fontSize: 12 }}>{errors.agree}</div>}
+            <button type="submit" className={styles.submit}>Отправить</button>
+          </form>
+        </div>
+      </div>
+    );
+  };
+
+  // Сброс подменю при закрытии моб. меню
+  useEffect(() => {
     if (!mobileOpen) {
       setMobileAboutOpen(false);
       setMobileProjectsOpen(false);
@@ -159,16 +250,17 @@ export const Header: React.FC = () => {
         </button>
       </div>
 
-      {/* Мобильное меню */}
+      {/* ---- МОБИЛЬНОЕ МЕНЮ ---- */}
       {mobileOpen && (
         <div className={styles.mobileMenu}>
-          <ul>
-            <li>
+          <ul style={{ gap: '1rem', padding: 0, margin: 0 }}>
+            <li style={{ margin: 0, padding: 0 }}>
               <button
                 className={styles.mobileToggle}
                 onClick={() => setMobileAboutOpen((v) => !v)}
                 aria-expanded={mobileAboutOpen}
                 aria-controls="about-mobile-submenu"
+                style={{ margin: 0, padding: 0 }}
               >
                 О нас
                 <img
@@ -180,9 +272,10 @@ export const Header: React.FC = () => {
               <ul
                 id="about-mobile-submenu"
                 className={`${styles.submenu} ${mobileAboutOpen ? styles.submenuOpen : ''}`}
+                style={{ margin: 0, padding: 0 }}
               >
                 {aboutItems.map((it) => (
-                  <li key={it.to}>
+                  <li key={it.to} style={{ margin: 0, padding: 0 }}>
                     <Link to={it.to} onClick={() => setMobileOpen(false)}>
                       {it.label}
                     </Link>
@@ -190,12 +283,13 @@ export const Header: React.FC = () => {
                 ))}
               </ul>
             </li>
-            <li>
+            <li style={{ margin: 0, padding: 0 }}>
               <button
                 className={styles.mobileToggle}
                 onClick={() => setMobileProjectsOpen((v) => !v)}
                 aria-expanded={mobileProjectsOpen}
                 aria-controls="projects-mobile-submenu"
+                style={{ margin: 0, padding: 0 }}
               >
                 Проекты
                 <img
@@ -207,9 +301,10 @@ export const Header: React.FC = () => {
               <ul
                 id="projects-mobile-submenu"
                 className={`${styles.submenu} ${mobileProjectsOpen ? styles.submenuOpen : ''}`}
+                style={{ margin: 0, padding: 0 }}
               >
                 {projectItems.map((it) => (
-                  <li key={it.to}>
+                  <li key={it.to} style={{ margin: 0, padding: 0 }}>
                     <Link to={it.to} onClick={() => setMobileOpen(false)}>
                       {it.label}
                     </Link>
@@ -217,13 +312,13 @@ export const Header: React.FC = () => {
                 ))}
               </ul>
             </li>
-            <li>
+            <li style={{ margin: 0, padding: 0 }}>
               <Link to="/news" onClick={() => setMobileOpen(false)}>Новости</Link>
             </li>
-            <li>
+            <li style={{ margin: 0, padding: 0 }}>
               <Link to="/faq" onClick={() => setMobileOpen(false)}>FAQ</Link>
             </li>
-            <li>
+            <li style={{ margin: 0, padding: 0 }}>
               <Link to="/contacts" onClick={() => setMobileOpen(false)}>Контакты</Link>
             </li>
           </ul>
@@ -242,7 +337,7 @@ export const Header: React.FC = () => {
         </div>
       )}
 
-      {/* Модальное окно "Связаться с нами" */}
+      {/* ---- МОДАЛЬНОЕ ОКНО ---- */}
       {contactOpen && <ContactModal />}
     </header>
   );
