@@ -253,8 +253,8 @@ export const Header: React.FC = () => {
       {/* ---- МОБИЛЬНОЕ МЕНЮ ---- */}
       {mobileOpen && (
         <div className={styles.mobileMenu}>
-          <ul style={{ gap: '1rem', padding: 0, margin: 0 }}>
-            <li style={{ margin: 0, padding: 0 }}>
+          <ul style={{ gap: '1rem', padding: 0}}>
+            <li style={{ padding: 0 }}>
               <button
                 className={styles.mobileToggle}
                 onClick={() => setMobileAboutOpen((v) => !v)}
